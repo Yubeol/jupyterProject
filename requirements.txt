@@ -2,3 +2,5 @@ pandas
 openpyxl
 matplotlib
 seaborn
+sqlalchemy
+psycopg2-binary

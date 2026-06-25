@@ -28,6 +28,14 @@ if __name__ == '__main__':
        '고객명', '성별', '생년월일', '시도', '구군시', '지역_y', '프로모션', '할인율', '채널명', '날짜코드',
        '년도', '분기', '월(No)', '월(영문)']]
     merged_sales.rename(columns={"지역_x":"지역", "Quantity": "수량"}, inplace=True)
+    merged_sales['순이익'] = (
+            merged_sales['수량'] *
+            (merged_sales['단가'] * (1 - merged_sales['할인율']) - merged_sales['원가'])
+    )
+    merged_sales['판매금액'] = (
+            merged_sales['수량'] *
+            (merged_sales['단가'] * (1 - merged_sales['할인율']))
+    )
 
     merged_sales.to_pickle('./data/merged_sales.pkl')
     print(merged_sales.keys())

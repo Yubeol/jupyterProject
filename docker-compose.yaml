@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: kogo        # 추가
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: mydb          # 추가
+    ports:
+      - "5432:5432"
