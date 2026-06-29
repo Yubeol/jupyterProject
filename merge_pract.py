@@ -1,8 +1,6 @@
 import pandas as pd
 
 
-
-
 if __name__ == '__main__':
     sales = pd.read_excel('./data/Sales.xlsx')
     details = pd.read_excel('./data/Details.xlsx', sheet_name=None)
@@ -23,25 +21,24 @@ if __name__ == '__main__':
     merged_sales = pd.merge(merged_sales, promotions, on='프로모션코드', how='left')
     merged_sales = pd.merge(merged_sales, channels, on='채널코드', how='left')
     merged_sales = pd.merge(merged_sales, date, on='날짜', how='left')
-    merged_sales = merged_sales[['날짜', '제품코드', '고객코드', '프로모션코드', '채널코드', 'Quantity', 'UnitPrice', '지역_x',
-       '제품명', '색상', '원가', '단가', '제품분류코드', '제품분류명', '분류코드', '분류명', '지역코드',
-       '고객명', '성별', '생년월일', '시도', '구군시', '지역_y', '프로모션', '할인율', '채널명', '날짜코드',
-       '년도', '분기', '월(No)', '월(영문)']]
-    merged_sales.rename(columns={"지역_x":"지역", "Quantity": "수량"}, inplace=True)
+    # print(merged_sales.keys())
+    # exit()
+    merged_sales = merged_sales[['날짜', '년도', '분기', '월(No)', '월(영문)', '고객명', '성별', '생년월일', '시도', '구군시',  '지역_x', 'Quantity',
+       '제품명', '색상', '원가', '단가', '제품분류명', '분류명',
+        '프로모션', '할인율', '채널명']]
+    merged_sales.rename(columns={"지역_x": "지역", "Quantity": "수량"}, inplace=True)
     merged_sales['순이익'] = (
-            merged_sales['수량'] *
+            merged_sales["수량"] *
             (merged_sales['단가'] * (1 - merged_sales['할인율']) - merged_sales['원가'])
     )
     merged_sales['판매금액'] = (
-            merged_sales['수량'] *
+            merged_sales["수량"] *
             (merged_sales['단가'] * (1 - merged_sales['할인율']))
     )
 
     merged_sales.to_pickle('./data/merged_sales.pkl')
     print(merged_sales.keys())
     exit()
-
-    details = pd.read_excel('./data/Details.xlsx', sheet_name=None)
 
     matrix = details['제품'].values
     print(matrix)
@@ -51,13 +48,12 @@ if __name__ == '__main__':
     print(result)
     exit()
 
-
     sales = pd.read_excel('./data/Sales.xlsx')
     sales['판매가격'] = sales['Quantity'] * sales['UnitPrice']
     seoul_region = sales.loc[(sales['지역'] == '서울') & (sales['판매가격'] >= 100000), :]
     print(seoul_region)
     exit()
-    details = pd.read_excel('./data/Details.xlsx', sheet_name=None)
+
     print(details.keys())
-    regions = details['지역']
+    regions = details["지역"]
     print(regions)

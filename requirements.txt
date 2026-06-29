@@ -4,3 +4,6 @@ matplotlib
 seaborn
 sqlalchemy
 psycopg2-binary
+dash
+dash-ag-grid
+plotly

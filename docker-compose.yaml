@@ -1,9 +1,16 @@
 services:
   postgres:
     image: postgres:16
+    container_name: postgres16
+    restart: always
     environment:
-      POSTGRES_USER: kogo        # 추가
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: mydb          # 추가
+      POSTGRES_USER: kogo
+      POSTGRES_PASSWORD: math1106
+      POSTGRES_DB: mydb
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
